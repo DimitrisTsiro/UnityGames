@@ -11,17 +11,17 @@ public class Laser : MonoBehaviour {
     Ray shootRay;
     RaycastHit shoothit;
     //LineRenderer lasserLine;
-    private Vector3 _moveVector;
+    //private Vector3 _moveVector;
     int shootableMask;
-    public float speed = 1500f;
+    //public float speed = 1500f;
     public Transform laserOrigin;
 
-    public Transform mouseCursorSprite;
+    //public Transform mouseCursorSprite;
 
     private OptitrackManager manager;
     private StreemData networkData;
 
-    public event Action<String> OnObjectSelected;
+    //public event Action<String> OnObjectSelected;
 
     private String selectedObject;
     public String SelectedObject
@@ -34,7 +34,11 @@ public class Laser : MonoBehaviour {
     public Vector3 TargetPosition
     {
         get { return targetPosition; }
-        set { targetPosition = value; }
+        set 
+		{ 
+			targetPosition = value; 
+			manager.CursorPoint = targetPosition;
+		}
     }
 
     void Awake()
@@ -45,7 +49,7 @@ public class Laser : MonoBehaviour {
         this.manager = GetComponentInParent<OptitrackManager>();
         this.manager.OnPointGesture += OnPointGesture;
         //this.manager.OnPointGestureStop += OnPointGestureStop;
-        this.manager.OnSelectGesture += OnSelectGesture;
+        //this.manager.OnSelectGesture += OnSelectGesture;
     }
 
     private void OnPointGesture(Vector3 _from, Vector3 _to)
@@ -59,13 +63,13 @@ public class Laser : MonoBehaviour {
         shootRay.origin = from;
         shootRay.direction =(to - from).normalized; // as the direction.
 
-        if (Physics.Raycast(shootRay, out shoothit, range, shootableMask) && SelectedObject != shoothit.collider.name && shoothit.point.z >1.68f )
+        if (Physics.Raycast(shootRay, out shoothit, range, shootableMask) && SelectedObject != shoothit.collider.name )
         {
             TargetPosition = shoothit.point;
-            mouseCursorSprite.position = Vector3.MoveTowards(mouseCursorSprite.position, shoothit.point, speed * Time.deltaTime);
+           // mouseCursorSprite.position = Vector3.MoveTowards(mouseCursorSprite.position, shoothit.point, speed * Time.deltaTime);
         }
     }
-
+	/*
     private void OnSelectGesture(string  wrist)
     {
         if (shoothit.collider != null && shoothit.collider.name == "CALIBRATION")
@@ -79,4 +83,5 @@ public class Laser : MonoBehaviour {
             SelectedObject = null;
 //        shoothit.transform.position = Vector3.MoveTowards(shoothit.transform.position, wrist.transform.position, speed * Time.deltaTime);
     }
+    */
 }

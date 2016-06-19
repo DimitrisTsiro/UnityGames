@@ -5,9 +5,9 @@ using System;
 
 public class LaserAppController : MonoBehaviour {
 
+	public int framesOfSelectGesture=10;
     private OptitrackManager _manager;
-    private Laser _laserManager;
-	public bool _deinitValue = false;
+	private int frameCounter=0;
 
     ~LaserAppController()
     {
@@ -19,44 +19,69 @@ public class LaserAppController : MonoBehaviour {
 	void Start () 
 	{
         OptitrackManagement.DirectMulticastSocketClient.Start();
-
         _manager = GetComponent<OptitrackManager>();
-        _laserManager = GetComponentInChildren<Laser>();
+
+		OptiTrackInputModule.instance._inputData = _manager;
 	}
 
     // Update is called once per frame
     void Update()
     {
-        if (OptitrackManagement.DirectMulticastSocketClient.IsInit() && OptitrackManagement.DirectMulticastSocketClient.IsDataReceivedCorrectly())
-        {
-            StreemData networkData = OptitrackManagement.DirectMulticastSocketClient.GetStreemData();
+        if (OptitrackManagement.DirectMulticastSocketClient.IsInit () && OptitrackManagement.DirectMulticastSocketClient.IsDataReceivedCorrectly ()) 
+		{
+			StreemData networkData = OptitrackManagement.DirectMulticastSocketClient.GetStreemData ();
 
-            if ( _manager.checkWristOrientation(networkData))
-            {
-                if (_manager.checkPointGesture(networkData))
-                {
-                    _manager.LaserPointing = true;
+			if (_manager.checkWristOrientation (networkData)) 
+			{
+				if (_manager.checkPointGesture (networkData)) 
+				{
+					_manager.LaserPointing = true;
 
-                    if (_manager.checkSelectGesture(networkData))
-                    {
-                        if (_laserManager.SelectedObject == null && _manager.DropGesture == false)
-                            _manager.SelectGesture = true;
-                        else if (_manager.SelectGesture == false && _laserManager.SelectedObject != null)
-                            _manager.DropGesture = true;
-                    }
-                    else
-                    {
-                        _manager.SelectGesture = false;
-                        _manager.DropGesture = false;
-                    }
-                }
-            }
-        }
-
-        if (_deinitValue)
-        {
-            _deinitValue = false;
-            OptitrackManagement.DirectMulticastSocketClient.Close();
-        }
+					if (_manager.SelectGesture) 
+					{
+						if(frameCounter<=framesOfSelectGesture)
+						{
+							if (_manager.checkForClick (networkData)) 
+							{
+								_manager.ClickGesture = true;
+								_manager.SelectGesture = false;
+								frameCounter = 0;
+							} 
+							else
+								frameCounter++;
+						}
+						else
+						{
+							frameCounter = 0;
+							_manager.SelectGesture =false;
+						}
+					}
+					else if (_manager.checkSelectGesture (networkData)) 
+					{
+						_manager.SelectGesture = true;
+						_manager.ClickGesture = false;
+					}
+					else
+					{
+						_manager.SelectGesture = false;
+						_manager.ClickGesture = false;
+					}
+				}
+				else
+					noGestures ();
+			}
+			else
+				noGestures ();
+		} 
+		else
+			noGestures ();
     }
+
+	private void noGestures()
+	{
+		_manager.LaserPointing = false;
+		_manager.SelectGesture = false;
+		_manager.ClickGesture = false;
+		frameCounter = 0;
+	}
 }

@@ -8,7 +8,7 @@ using System;
 //https://developer.vuforia.com/forum/faq/android-how-can-i-capture-ar-view
 
 public class CalibSelect : MonoBehaviour {
-
+	/*
     private OptitrackManager manager;
     private Laser theLaser;
     private Vector3 moveVector;
@@ -61,4 +61,5 @@ public class CalibSelect : MonoBehaviour {
             moveVector = targetPosition;
         }
     }
+*/
 }
