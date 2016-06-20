@@ -312,6 +312,15 @@ public class OptitrackManager : MonoBehaviour
 
 	public bool checkForClick (StreemData networkData)
 	{
-		return false;
+		Vector3 v1 = networkData._markers[middle].pos;
+		Vector3 v2 = networkData._markers[firstPoint].pos;
+		Vector3 v3 = networkData._markers[theThumb].pos;
+		
+		float angle = signedAngleBetween(v1, v3, v2);
+		// Debug.Log(angle);
+		if (angle <= 0.25f)
+			return true;
+		else
+			return false;
 	}
 }

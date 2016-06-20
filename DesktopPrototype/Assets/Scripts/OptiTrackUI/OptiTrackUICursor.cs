@@ -14,8 +14,8 @@ public class OptiTrackUICursor : AbstractOptiTrackUICursor
     public override void Start()
     {
         base.Start();
-        _initScale = transform.localScale;
-        _image.color = new Color(1f, 1f, 1f, 0f);
+        //_initScale = transform.localScale;
+        //_image.color = new Color(1f, 1f, 1f, 0f);
     }
 
     public override void ProcessData()
@@ -33,6 +33,6 @@ public class OptiTrackUICursor : AbstractOptiTrackUICursor
         {
             _image.color = normalColor;
         }
-        _image.transform.localScale = _initScale;
+        //_image.transform.localScale = _initScale;
     }
 }

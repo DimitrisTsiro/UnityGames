@@ -16,8 +16,7 @@ public class OptiTrackInputModuleEditor : Editor
 
     void OnEnable()
     {
-		kModule = target as OptiTrackInputModule;
-        
+		kModule = target as OptiTrackInputModule;        
 
         _scrollSpeed = serializedObject.FindProperty("_scrollSpeed");
         _scrollTreshold = serializedObject.FindProperty("_scrollTreshold");
