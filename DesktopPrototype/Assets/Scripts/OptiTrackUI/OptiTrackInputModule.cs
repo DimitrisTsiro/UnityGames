@@ -26,7 +26,7 @@ public class OptiTrackInputModule : BaseInputModule
 			if (!_instance)
 			{
 				_instance = FindObjectOfType(typeof(OptiTrackInputModule)) as OptiTrackInputModule;
-
+				_instance._inputData = FindObjectOfType(typeof(OptitrackManager)) as OptitrackManager;
 				if (!_instance)
 				{
 					if (EventSystem.current){
@@ -130,11 +130,15 @@ public class OptiTrackInputModule : BaseInputModule
 		{
 			PointerEventData lookData = GetLookPointerEventData(_inputData.GetHandScreenPosition());
 			eventSystem.SetSelectedGameObject(null);
+
+			Debug.Log(lookData.pointerCurrentRaycast.gameObject);
+
 			if (lookData.pointerCurrentRaycast.gameObject != null)
 			{
 				GameObject go = lookData.pointerCurrentRaycast.gameObject;
 				ExecuteEvents.ExecuteHierarchy(go, lookData, ExecuteEvents.submitHandler);
-				//ExecuteEvents.ExecuteHierarchy(go, lookData, ExecuteEvents.pointerUpHandler);
+				ExecuteEvents.ExecuteHierarchy(go, lookData, ExecuteEvents.pointerUpHandler);
+				ExecuteEvents.ExecuteHierarchy(go, lookData, ExecuteEvents.pointerClickHandler);
 			}		
 			_inputData.ClickGesture = false;
 		}

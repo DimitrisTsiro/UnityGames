@@ -7,16 +7,12 @@ using System.Collections.Generic;
 [CustomEditor(typeof(OptiTrackInputModule))]
 public class OptiTrackInputModuleEditor : Editor
 {
-
-	OptiTrackInputModule kModule;
-
     SerializedProperty _scrollTreshold;
     SerializedProperty _scrollSpeed;
     SerializedProperty _waitOverTime;
 
     void OnEnable()
-    {
-		kModule = target as OptiTrackInputModule;        
+    {      
 
         _scrollSpeed = serializedObject.FindProperty("_scrollSpeed");
         _scrollTreshold = serializedObject.FindProperty("_scrollTreshold");
@@ -34,12 +30,4 @@ public class OptiTrackInputModuleEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 
-    private struct DataParams
-    {
-		public OptiTrackUIHandType jointType;
-    }
-}
-public enum OptiTrackUIHandType
-{
-	Right,Left
 }

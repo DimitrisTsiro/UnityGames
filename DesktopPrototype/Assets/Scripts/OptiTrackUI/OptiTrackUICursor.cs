@@ -6,7 +6,7 @@ public class OptiTrackUICursor : AbstractOptiTrackUICursor
 {
     public Color normalColor = new Color(1f, 1f, 1f, 0.5f);
     public Color hoverColor = new Color(1f, 1f, 1f, 1f);
-    public Color clickColor = new Color(1f, 1f, 1f, 1f);
+    public Color clickColor = Color.red;
     public Vector3 clickScale = new Vector3(.8f, .8f, .8f);
 
     private Vector3 _initScale;
@@ -21,17 +21,13 @@ public class OptiTrackUICursor : AbstractOptiTrackUICursor
     public override void ProcessData()
     {
         // update pos
-		transform.position = _data.GetHandScreenPosition();
+		transform.position = _data.CursorPoint;
 		if (_data.ClickGesture)
         {
-            _image.color = clickColor;
-            _image.transform.localScale = clickScale;
-            return;
-        }
-       
-        else
-        {
-            _image.color = normalColor;
+			Debug.Log("click");
+            //_image.color = clickColor;
+            //_image.transform.localScale = clickScale;
+           // return;
         }
         //_image.transform.localScale = _initScale;
     }

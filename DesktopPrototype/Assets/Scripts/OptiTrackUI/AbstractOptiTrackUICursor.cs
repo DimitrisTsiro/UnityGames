@@ -19,7 +19,7 @@ public abstract class AbstractOptiTrackUICursor : MonoBehaviour {
 
     protected void Setup()
     {
-		_data = GetComponent<OptitrackManager>();
+		_data = FindObjectOfType(typeof(OptitrackManager)) as OptitrackManager;
         // Make sure we dont block raycasts
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         GetComponent<CanvasGroup>().interactable = false;

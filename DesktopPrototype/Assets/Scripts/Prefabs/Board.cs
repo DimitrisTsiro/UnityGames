@@ -15,7 +15,7 @@ public class Board : MonoBehaviour {
 	public bool vertical = false;                    //is the drawb shape on the xy-plane?
 
 	public event Action<int> NextCircleToHit;
-	private int circleToHit = 25;
+	private int circleToHit;
 	public int CircleNumber
 	{
 		get{return circleToHit;}
@@ -40,6 +40,9 @@ public class Board : MonoBehaviour {
 	private int startover=-1;
 	// Use this for initialization
 	void Start () {
+
+		circleToHit = numPoints; 
+
 		for(int i = 0; i<numPoints;i++){
 			//multiply 'i' by '1.0f' to ensure the result is a fraction
 			float pointNum = (i*1.0f)/numPoints;

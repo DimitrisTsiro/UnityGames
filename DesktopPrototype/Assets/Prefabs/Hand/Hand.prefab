@@ -141,7 +141,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 110890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.192911804, y: .0581470132, z: .00705090165}
+  m_LocalPosition: {x: -.192900002, y: .0581, z: .0405000001}
   m_LocalScale: {x: .00800000038, y: .00800000038, z: .00800000038}
   m_Children: []
   m_Father: {fileID: 410892}
@@ -153,7 +153,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 110892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.398, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 410896}
@@ -193,7 +193,7 @@ Renderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 110886}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
@@ -233,7 +233,7 @@ Renderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 110890}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
@@ -360,6 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da34c259741e9d41ab2fc371044af34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handScreenPositionMultiplier: 5
   origin: {fileID: 0}
   wrist: {fileID: 110896}
   poin1: {fileID: 110894}
@@ -378,9 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 200
-  speed: 1.5
   laserOrigin: {fileID: 0}
-  mouseCursorSprite: {fileID: 0}
 --- !u!114 &11471862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -392,7 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec09aba7b7477b7498c39b0b28e2417b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _deinitValue: 0
+  framesOfSelectGesture: 10
 --- !u!120 &12010896
 LineRenderer:
   m_ObjectHideFlags: 1

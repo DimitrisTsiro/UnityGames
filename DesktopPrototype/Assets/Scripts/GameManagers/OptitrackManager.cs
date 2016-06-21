@@ -5,11 +5,10 @@ using OptitrackManagement;
 
 public class OptitrackManager : MonoBehaviour
 {
-	// We can normalize camera z position with this
-	public float handScreenPositionMultiplier = 5f;
-
     public Transform origin;
     public GameObject wrist;
+
+	public Camera mainCamera;
 
     public GameObject poin1;
     public GameObject point2;
@@ -26,18 +25,18 @@ public class OptitrackManager : MonoBehaviour
     private Vector3 middlePointVec;
     private Vector3 laserPointVec;
     private Vector3 thumbPointVec;
-	private Vector3 cursorPointVec;
+	private Vector3 cursorPointVec = new Vector3(0,0,0);
     private Transform theWrist;
 
-    private bool isLaserPointing;
-    private bool isSelectGesture = false;
-    private bool isClickGesture;
+	private bool isLaserPointing = true;
+	private bool isSelectGesture = true;
+	private bool isClickGesture = true;
 
     public event Action<Vector3, Vector3> OnPointGesture;
     public event Action<Vector3, Vector3> OnPointGestureStop;
     public event Action<String,Vector3> OnClickGesture;
 
-    public Transform TheWrist
+	public Transform TheWrist
     {
     get { return theWrist; }
         set { theWrist = value;}
@@ -48,7 +47,7 @@ public class OptitrackManager : MonoBehaviour
         get { return isLaserPointing; }
         set
         {
-            isLaserPointing = value;
+			isLaserPointing = true;
             if (value == true)
                 OnPointGesture(middlePointVec, laserPointVec);
            // else
@@ -59,13 +58,13 @@ public class OptitrackManager : MonoBehaviour
     public bool SelectGesture
     {
         get { return isSelectGesture; }
-        set {isSelectGesture = value;}
+		set {isSelectGesture = true;}
     }
 
     public bool ClickGesture
     {
 		get { return isClickGesture; }
-		set {isClickGesture = value;}
+		set {isClickGesture = true;}
     }
 
     public Vector3 FirstPoint
@@ -101,10 +100,10 @@ public class OptitrackManager : MonoBehaviour
    	// Converts hand position to screen coordinates
 	public Vector3 GetHandScreenPosition()
 	{
-		return Camera.main.WorldToScreenPoint(new Vector3(cursorPointVec.x, cursorPointVec.y, cursorPointVec.z - handScreenPositionMultiplier));
+		return mainCamera.WorldToScreenPoint(new Vector3(cursorPointVec.x, cursorPointVec.y, cursorPointVec.z));
 	}
 
-    public bool checkWristOrientation(StreemData networkData)
+	public bool checkWristOrientation(StreemData networkData)
     {
         _moveVector = transform.position;     
         _moveVector = networkData._rigidBody[0].pos + origin.position;

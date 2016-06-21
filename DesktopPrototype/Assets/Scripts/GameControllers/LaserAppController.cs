@@ -8,6 +8,7 @@ public class LaserAppController : MonoBehaviour {
 	public int framesOfSelectGesture=10;
     private OptitrackManager _manager;
 	private int frameCounter=0;
+	private OptiTrackInputModule inputModule;
 
     ~LaserAppController()
     {
@@ -19,9 +20,8 @@ public class LaserAppController : MonoBehaviour {
 	void Start () 
 	{
         OptitrackManagement.DirectMulticastSocketClient.Start();
+		inputModule = OptiTrackInputModule.instance;
         _manager = GetComponent<OptitrackManager>();
-
-		OptiTrackInputModule.instance._inputData = _manager;
 	}
 
     // Update is called once per frame

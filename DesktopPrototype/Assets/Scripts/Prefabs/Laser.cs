@@ -10,7 +10,7 @@ public class Laser : MonoBehaviour {
 
     Ray shootRay;
     RaycastHit shoothit;
-    //LineRenderer lasserLine;
+    LineRenderer lasserLine;
     //private Vector3 _moveVector;
     int shootableMask;
     //public float speed = 1500f;
@@ -44,7 +44,7 @@ public class Laser : MonoBehaviour {
     void Awake()
     {
         shootableMask = LayerMask.GetMask("wallDisplay");
-      // lasserLine = this.GetComponent<LineRenderer>();
+        lasserLine = this.GetComponent<LineRenderer>();
 
         this.manager = GetComponentInParent<OptitrackManager>();
         this.manager.OnPointGesture += OnPointGesture;
@@ -52,20 +52,41 @@ public class Laser : MonoBehaviour {
         //this.manager.OnSelectGesture += OnSelectGesture;
     }
 
+	void Update()
+	{
+		Vector3 from =  this.manager.point2.transform.position + laserOrigin.position;
+		Vector3 to = this.manager.laserpoint.transform.position + laserOrigin.position;
+		
+		lasserLine.SetPosition(0, from);
+		
+		shootRay.origin = from;
+		shootRay.direction =(to - from).normalized; // as the direction.
+		
+		if (Physics.Raycast(shootRay, out shoothit, range, shootableMask))
+		{
+			TargetPosition = shoothit.point;
+			lasserLine.enabled = true;
+			lasserLine.SetPosition(1, shoothit.point);
+			// mouseCursorSprite.position = Vector3.MoveTowards(mouseCursorSprite.position, shoothit.point, speed * Time.deltaTime);
+		}
+	}
+
     private void OnPointGesture(Vector3 _from, Vector3 _to)
     {
 
-        Vector3 from =  _from + laserOrigin.position;
-        Vector3 to = _to + laserOrigin.position;
+		Vector3 from =  this.manager.point2.transform.position + laserOrigin.position;
+		Vector3 to = this.manager.laserpoint.transform.position + laserOrigin.position;
 
-        transform.position = _to;
+		lasserLine.SetPosition(0, from);
 
         shootRay.origin = from;
         shootRay.direction =(to - from).normalized; // as the direction.
 
-        if (Physics.Raycast(shootRay, out shoothit, range, shootableMask) && SelectedObject != shoothit.collider.name )
+        if (Physics.Raycast(shootRay, out shoothit, range, shootableMask))
         {
             TargetPosition = shoothit.point;
+			lasserLine.enabled = true;
+			lasserLine.SetPosition(1, shoothit.point);
            // mouseCursorSprite.position = Vector3.MoveTowards(mouseCursorSprite.position, shoothit.point, speed * Time.deltaTime);
         }
     }
